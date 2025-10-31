@@ -27,6 +27,7 @@
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
     "@nestjs/graphql": "^13.2.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/mongoose": "^11.0.3",
     "@nestjs/platform-express": "^11.0.1",
     "apollo-server-core": "^3.13.0",

@@ -2,6 +2,38 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateUserInput {
+	address: String!
+	email: String!
+	name: String!
+	password: String!
+}
+
+type Mutation {
+	createUser(createUserInput: CreateUserInput!): User!
+	removeUser(id: Int!): User!
+	updateUser(updateUserInput: UpdateUserInput!): User!
+}
+
 type Query {
-  getHello: String!
+	getHello: String!
+
+	"""
+	Поиск пользователя по id
+	"""
+	userById(id: String!): [User!]!
+	users: [User!]!
+}
+
+input UpdateUserInput {
+	_id: String!
+	password: String!
+}
+
+type User {
+	_id: String!
+	address: String!
+	email: String!
+	name: String!
+	password: String!
 }
