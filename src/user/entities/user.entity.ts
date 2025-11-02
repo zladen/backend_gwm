@@ -5,48 +5,38 @@ import { Location } from 'src/location/entities/location.entity';
 
 @ObjectType()
 @Schema()
+@ObjectType()
+@Schema()
 export class User {
 	@Field(() => String)
 	_id: MongooSchema.Types.ObjectId;
 
-	// Add user properties
 	@Field(() => String)
-	@Prop()
-	name: string;
+	@Prop({ type: String })
+	firstName: string;
 
 	@Field(() => String)
-	@Prop({ unique: true })
+	@Prop({ type: String })
+	lastName: string;
+
+	@Field(() => String)
+	@Prop({ type: String, unique: true })
 	email: string;
 
-	@Field(() => String)
-	@Prop()
-	image: string;
+	@Field(() => String, { nullable: true })
+	@Prop({ type: String })
+	image?: string;
 
-	@Field(() => String)
-	@Prop()
-	description: string;
+	@Field(() => String, { nullable: true })
+	@Prop({ type: String })
+	description?: string;
 
-	@Field(() => Location)
-	@Prop()
-	location: Location;
+	@Field(() => Location, { nullable: true })
+	@Prop({ type: MongooSchema.Types.ObjectId, ref: 'Location', default: null })
+	location?: MongooSchema.Types.ObjectId | null;
 
-	// @Field(() => String)
-	// @Prop()
-	// categories: Categories;
-
-	// @Field(() => String)
-	// @Prop()
-	// tags: Tags;
-
-	emailVerified: Boolean;
-
-	// @Field(() => String)
-	// @Prop()
-	// password: string;
-
-	// @Field(() => String)
-	// @Prop()
-	// address: string;
+	@Field(() => Boolean)
+	emailVerified: boolean;
 }
 
 export type UserDocument = User & Document;

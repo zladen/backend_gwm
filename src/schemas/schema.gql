@@ -66,9 +66,11 @@ input UpdateUserInput {
 
 type User {
   _id: String!
-  description: String!
+  description: String
   email: String!
-  image: String!
-  location: Location!
-  name: String!
+  emailVerified: Boolean!
+  firstName: String!
+  image: String
+  lastName: String!
+  location: Location
 }

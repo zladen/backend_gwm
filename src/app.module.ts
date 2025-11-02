@@ -11,6 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { getMongooseConfig } from './config/mongoose.config';
 import { UserModule } from './user/user.module';
 import { LocationModule } from './location/location.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
 	imports: [
@@ -39,9 +40,7 @@ import { LocationModule } from './location/location.module';
 
 		LocationModule,
 
-		// AuthModule,
-		// UserModule,
-		// PersonModule,
+		AuthModule,
 	],
 
 	controllers: [],
