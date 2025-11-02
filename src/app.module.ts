@@ -10,6 +10,7 @@ import { AppResolver } from './app.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongooseConfig } from './config/mongoose.config';
 import { UserModule } from './user/user.module';
+import { LocationModule } from './location/location.module';
 
 @Module({
 	imports: [
@@ -35,6 +36,8 @@ import { UserModule } from './user/user.module';
 		}),
 
 		UserModule,
+
+		LocationModule,
 
 		// AuthModule,
 		// UserModule,

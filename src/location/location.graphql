@@ -1,0 +1,24 @@
+type Location {
+	# Example field (placeholder)
+	exampleField: Int
+}
+
+input CreateLocationInput {
+	# Example field (placeholder)
+	exampleField: Int
+}
+
+input UpdateLocationInput {
+	id: Int!
+}
+
+type Query {
+	location: [Location]!
+	location(id: ID!): Location
+}
+
+type Mutation {
+	createLocation(createLocationInput: CreateLocationInput!): Location!
+	updateLocation(updateLocationInput: UpdateLocationInput!): Location!
+	removeLocation(id: ID!): Location
+}

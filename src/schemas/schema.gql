@@ -2,38 +2,73 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateLocationInput {
+  coordinates: [Float!]!
+  type: String!
+}
+
 input CreateUserInput {
-	address: String!
-	email: String!
-	name: String!
-	password: String!
+  address: String!
+  email: String!
+  name: String!
+  password: String!
+}
+
+type Location {
+  _id: String!
+  coordinates: [Float!]!
+  type: String!
 }
 
 type Mutation {
-	createUser(createUserInput: CreateUserInput!): User!
-	removeUser(id: Int!): User!
-	updateUser(updateUserInput: UpdateUserInput!): User!
+  """Создать локацию"""
+  createLocation(createLocationInput: CreateLocationInput!): Location!
+
+  """Создать пользователя"""
+  createUser(createUserInput: CreateUserInput!): User!
+
+  """Удалить локацию"""
+  removeLocation(id: ID!): Location!
+
+  """Удалить пользователя"""
+  removeUser(id: ID!): User!
+
+  """Обновить локацию"""
+  updateLocation(updateLocationInput: UpdateLocationInput!): Location!
+
+  """Обновить данные пользователя"""
+  updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
-	getHello: String!
+  getHello: String!
 
-	"""
-	Поиск пользователя по id
-	"""
-	userById(id: String!): [User!]!
-	users: [User!]!
+  """Поиск места по id"""
+  locationById(id: ID!): Location!
+
+  """Поиск пользователя по id"""
+  userById(id: ID!): User!
+
+  """Получить всех пользователей"""
+  users: [User!]!
+}
+
+input UpdateLocationInput {
+  _id: String!
+  coordinates: [Float!]!
+  type: String!
 }
 
 input UpdateUserInput {
-	_id: String!
-	password: String!
+  _id: String!
+  password: String!
 }
 
 type User {
-	_id: String!
-	address: String!
-	email: String!
-	name: String!
-	password: String!
+  _id: String!
+  description: String!
+  email: String!
+  image: String!
+  location: Location!
+  name: String!
 }

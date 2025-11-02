@@ -1,6 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Document, Schema as MongooSchema } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Location } from 'src/location/entities/location.entity';
 
 @ObjectType()
 @Schema()
@@ -19,11 +20,33 @@ export class User {
 
 	@Field(() => String)
 	@Prop()
-	password: string;
+	image: string;
 
 	@Field(() => String)
 	@Prop()
-	address: string;
+	description: string;
+
+	@Field(() => Location)
+	@Prop()
+	location: Location;
+
+	// @Field(() => String)
+	// @Prop()
+	// categories: Categories;
+
+	// @Field(() => String)
+	// @Prop()
+	// tags: Tags;
+
+	emailVerified: Boolean;
+
+	// @Field(() => String)
+	// @Prop()
+	// password: string;
+
+	// @Field(() => String)
+	// @Prop()
+	// address: string;
 }
 
 export type UserDocument = User & Document;

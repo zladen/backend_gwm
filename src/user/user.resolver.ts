@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ID } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -9,27 +9,36 @@ import { Schema as MongooSchema } from 'mongoose';
 export class UserResolver {
 	constructor(private readonly userService: UserService) {}
 
-	@Mutation(() => User)
-	createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
-		return this.userService.createUser(createUserInput);
-	}
-
-	@Query(() => [User], { name: 'users' })
-	findAll() {
-		return this.userService.findAll();
-	}
-
-	@Query(() => [User], {
+	@Query(() => User, {
 		name: 'userById',
 		description: 'Поиск пользователя по id',
 	})
 	getUserById(
-		@Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
+		@Args('id', { type: () => ID }) id: MongooSchema.Types.ObjectId,
 	) {
 		return this.userService.getUserById(id);
 	}
 
-	@Mutation(() => User)
+	@Query(() => [User], {
+		name: 'users',
+		description: 'Получить всех пользователей',
+	})
+	findAll() {
+		return this.userService.findAll();
+	}
+
+	@Mutation(() => User, {
+		name: 'createUser',
+		description: 'Создать пользователя',
+	})
+	createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+		return this.userService.createUser(createUserInput);
+	}
+
+	@Mutation(() => User, {
+		name: 'updateUser',
+		description: 'Обновить данные пользователя',
+	})
 	updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
 		return this.userService.updateUser(
 			updateUserInput._id,
@@ -37,10 +46,13 @@ export class UserResolver {
 		);
 	}
 
-	@Mutation(() => User)
+	@Mutation(() => User, {
+		name: 'removeUser',
+		description: 'Удалить пользователя',
+	})
 	removeUser(
-		@Args('id', { type: () => Int }) id: MongooSchema.Types.ObjectId,
+		@Args('id', { type: () => ID }) id: MongooSchema.Types.ObjectId,
 	) {
-		return this.userService.remove(id);
+		return this.userService.removeUser(id);
 	}
 }
