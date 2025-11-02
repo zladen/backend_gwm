@@ -32,8 +32,8 @@ export class User {
 	description?: string;
 
 	@Field(() => Location, { nullable: true })
-	@Prop({ type: MongooSchema.Types.ObjectId, ref: 'Location', default: null })
-	location?: MongooSchema.Types.ObjectId | null;
+	@Prop({ type: MongooSchema.Types.ObjectId, ref: 'Location' })
+	location?: Location;
 
 	@Field(() => Boolean)
 	emailVerified: boolean;

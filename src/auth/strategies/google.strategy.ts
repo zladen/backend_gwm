@@ -6,7 +6,6 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { AuthService } from './../auth.service';
 import { ConfigService } from '@nestjs/config';
-import { Profile } from 'passport';
 
 @Injectable()
 export class GoogleAuthStrategy extends PassportStrategy(
@@ -28,26 +27,6 @@ export class GoogleAuthStrategy extends PassportStrategy(
 			scope: ['profile', 'email'],
 		});
 	}
-
-	// async validate(profile: Profile) {
-	// 	// You can do your user validation and extraction logic here
-	// 	console.log('Google profile:', profile);
-	// 	const email = profile.emails?.[0]?.value;
-
-	// 	if (!email) {
-	// 		throw new Error('Email not found in Google profile');
-	// 	}
-
-	// 	const picture = profile.photos?.[0]?.value || ''; // пустая строка, если фото нет
-
-	// 	const userData = {
-	// 		name: profile.displayName,
-	// 		email,
-	// 		picture,
-	// 	};
-
-	// 	return this.authService.validateUser(userData);
-	// }
 
 	async validate(
 		accessToken: string,
