@@ -10,7 +10,6 @@ import { getMongooseConfig } from './config/mongoose.config';
 import { UserModule } from './user/user.module';
 import { LocationModule } from './location/location.module';
 import { AuthModule } from './auth/GoogleAuth/auth.module';
-
 @Module({
 	imports: [
 		ConfigModule.forRoot({

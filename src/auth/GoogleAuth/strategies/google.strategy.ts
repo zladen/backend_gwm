@@ -47,6 +47,8 @@ export class GoogleAuthStrategy extends PassportStrategy(
 		try {
 			// сохраняем или обновляем пользователя через AuthService
 			const user = await this.authService.validateUser(userData);
+			console.log('Google strategy - validated user in strategy:', user && (user as any).email);
+			// передаём найденного/созданного пользователя дальше в passport
 			done(null, user);
 		} catch (err) {
 			done(err, false);

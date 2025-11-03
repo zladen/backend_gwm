@@ -12,7 +12,7 @@ async function bootstrap() {
 	const configService = app.get(ConfigService);
 
 	app.enableCors({
-		origin: 'http://localhost:3001', // фронтенд
+		origin: 'http://localhost:5173', // фронтенд
 		credentials: true,
 	});
 
@@ -24,7 +24,11 @@ async function bootstrap() {
 			store: MongoStore.create({
 				mongoUrl: configService.getOrThrow('MONGODB_URI'),
 			}),
-			cookie: { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 }, // 1 день
+			cookie: {
+				secure: false, // Для development,
+				httpOnly: true,
+				maxAge: 1000 * 60 * 60 * 24, // 1 день
+			},
 		}),
 	);
 
@@ -35,6 +39,7 @@ async function bootstrap() {
 	passport.serializeUser(
 		sessionSerializer.serializeUser.bind(sessionSerializer),
 	);
+
 	passport.deserializeUser(
 		sessionSerializer.deserializeUser.bind(sessionSerializer),
 	);

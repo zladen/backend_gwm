@@ -5,8 +5,6 @@ import { Location } from 'src/location/entities/location.entity';
 
 @ObjectType()
 @Schema()
-@ObjectType()
-@Schema()
 export class User {
 	@Field(() => String)
 	_id: MongooSchema.Types.ObjectId;

@@ -43,6 +43,7 @@ type Mutation {
 type Query {
   """Поиск места по id"""
   locationById(id: ID!): Location!
+  me: User!
 
   """Поиск пользователя по id"""
   userById(id: ID!): User!
