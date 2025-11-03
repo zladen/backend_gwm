@@ -41,8 +41,6 @@ type Mutation {
 }
 
 type Query {
-  getHello: String!
-
   """Поиск места по id"""
   locationById(id: ID!): Location!
 

@@ -5,13 +5,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { getGraphQLConfig } from './config/graphql.config';
 import { ApolloDriver } from '@nestjs/apollo';
-import { AppService } from './app.service';
-import { AppResolver } from './app.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongooseConfig } from './config/mongoose.config';
 import { UserModule } from './user/user.module';
 import { LocationModule } from './location/location.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth/GoogleAuth/auth.module';
 
 @Module({
 	imports: [
@@ -44,7 +42,7 @@ import { AuthModule } from './auth/auth.module';
 	],
 
 	controllers: [],
-	providers: [AppService, AppResolver],
+	providers: [],
 })
 
 // Подключаем LoggingMiddleware глобально ко всем маршрутам

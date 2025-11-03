@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import session from 'express-session';
 import passport from 'passport';
 import MongoStore from 'connect-mongo';
-import { SessionSerializer } from './auth/serializer/session.serializer';
+import { SessionSerializer } from './auth/GoogleAuth/serializer/google-session.serializer';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {

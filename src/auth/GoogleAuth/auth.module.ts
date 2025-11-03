@@ -6,7 +6,7 @@ import { User, UserSchema } from 'src/user/entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
 import { GoogleAuthStrategy } from './strategies/google.strategy';
 import { ConfigModule } from '@nestjs/config';
-import { SessionSerializer } from './serializer/session.serializer';
+import { SessionSerializer } from './serializer/google-session.serializer';
 
 @Module({
 	imports: [
