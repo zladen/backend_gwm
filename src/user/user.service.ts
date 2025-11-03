@@ -12,17 +12,17 @@ export class UserService {
 		private userModel: Model<UserDocument>,
 	) {}
 
-	createUser(createUserInput: CreateUserInput) {
-		const createUser = new this.userModel(createUserInput);
-		return createUser.save();
-	}
-
-	findAll() {
-		return [];
+	getAllUsers() {
+		return this.userModel.find();
 	}
 
 	getUserById(id: MongooSchema.Types.ObjectId) {
 		return this.userModel.findById(id);
+	}
+
+	createUser(createUserInput: CreateUserInput) {
+		const createUser = new this.userModel(createUserInput);
+		return createUser.save();
 	}
 
 	updateUser(

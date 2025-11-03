@@ -23,8 +23,8 @@ export class UserResolver {
 		name: 'users',
 		description: 'Получить всех пользователей',
 	})
-	findAll() {
-		return this.userService.findAll();
+	getAllUsers() {
+		return this.userService.getAllUsers();
 	}
 
 	@Mutation(() => User, {
