@@ -1,7 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Document, Schema as MongooSchema } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Role } from 'src/auth/GoogleAuth/interfaces/role.interface';
+import { Role } from 'src/auth/interfaces/role.interface';
 @ObjectType()
 @Schema()
 export class User {
@@ -18,7 +18,7 @@ export class User {
 
 	@Field(() => String)
 	@Prop({ type: String, unique: true })
-	email: string;
+	email?: string;
 
 	@Field(() => String, { nullable: true })
 	@Prop({ type: String })

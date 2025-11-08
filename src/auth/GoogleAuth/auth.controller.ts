@@ -9,10 +9,10 @@ import {
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { GoogleOAuthGuard } from '../GoogleAuth/guard/google-oauth.guard';
-import { SessionAuthGuard } from '../GoogleAuth/guard/session-auth.guard';
-import { Roles } from './decorators/roles.decorator';
-import { Role } from './interfaces/role.interface';
-import { RolesGuard } from './guard/roles.guard';
+import { SessionAuthGuard } from '../guard/session-auth.guard';
+import { Roles } from '../decorators/roles.decorator';
+import { Role } from '../interfaces/role.interface';
+import { RolesGuard } from '../guard/roles.guard';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { Schema as MongooSchema } from 'mongoose';

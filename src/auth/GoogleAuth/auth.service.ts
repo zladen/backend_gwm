@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/user/entities/user.entity';
-import { Role } from './interfaces/role.interface';
+import { Role } from '../interfaces/role.interface';
 
 @Injectable()
 export class AuthService {

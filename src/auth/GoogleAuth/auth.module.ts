@@ -10,8 +10,8 @@ import { ConfigModule } from '@nestjs/config';
 import { SessionSerializer } from './serializer/google-session.serializer';
 import { AuthResolver } from './auth.resolver';
 import { GoogleOAuthGuard } from './guard/google-oauth.guard';
-import { SessionAuthGuard } from './guard/session-auth.guard';
-import { RolesGuard } from './guard/roles.guard';
+import { SessionAuthGuard } from '../guard/session-auth.guard';
+import { RolesGuard } from '../guard/roles.guard';
 
 @Module({
 	imports: [
