@@ -1,8 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Document, Schema as MongooSchema } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Location } from 'src/location/entities/location.entity';
-
+import { Role } from 'src/auth/GoogleAuth/interfaces/role.interface';
 @ObjectType()
 @Schema()
 export class User {
@@ -29,12 +28,17 @@ export class User {
 	@Prop({ type: String })
 	description?: string;
 
-	@Field(() => Location, { nullable: true })
-	@Prop({ type: MongooSchema.Types.ObjectId, ref: 'Location' })
-	location?: Location;
+	@Field(() => [String])
+	@Prop({ type: [String], enum: Object.values(Role), default: [Role.USER] })
+	roles: Role[];
 
-	@Field(() => Boolean)
-	emailVerified: boolean;
+	@Field(() => Date)
+	@Prop({ type: Date, default: Date.now })
+	createdAt: Date;
+
+	@Field(() => Date)
+	@Prop({ type: Date, default: Date.now })
+	updatedAt: Date;
 }
 
 export type UserDocument = User & Document;

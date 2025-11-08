@@ -14,6 +14,11 @@ input CreateUserInput {
   password: String!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Location {
   _id: String!
   coordinates: [Float!]!
@@ -41,9 +46,12 @@ type Mutation {
 }
 
 type Query {
+  adminRoute: String!
+
   """Поиск места по id"""
   locationById(id: ID!): Location!
   me: User!
+  moderatorRoute: String!
 
   """Поиск пользователя по id"""
   userById(id: ID!): User!
@@ -65,11 +73,12 @@ input UpdateUserInput {
 
 type User {
   _id: String!
+  createdAt: DateTime!
   description: String
   email: String!
-  emailVerified: Boolean!
   firstName: String!
   image: String
   lastName: String!
-  location: Location
+  roles: [String!]!
+  updatedAt: DateTime!
 }

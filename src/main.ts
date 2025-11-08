@@ -12,7 +12,7 @@ async function bootstrap() {
 	const configService = app.get(ConfigService);
 
 	app.enableCors({
-		origin: 'http://localhost:5173', // фронтенд
+		origin: 'http://localhost:3001', // фронтенд
 		credentials: true,
 	});
 

@@ -1,10 +1,26 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import {
+	Controller,
+	ForbiddenException,
+	Get,
+	Param,
+	Req,
+	Res,
+	UseGuards,
+} from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { GoogleOAuthGuard } from '../GoogleAuth/guard/google-oauth.guard';
 import { SessionAuthGuard } from '../GoogleAuth/guard/session-auth.guard';
+import { Roles } from './decorators/roles.decorator';
+import { Role } from './interfaces/role.interface';
+import { RolesGuard } from './guard/roles.guard';
+import { User } from 'src/user/entities/user.entity';
+import { UserService } from 'src/user/user.service';
+import { Schema as MongooSchema } from 'mongoose';
 
 @Controller('auth')
 export class AuthController {
+	constructor(private readonly userService: UserService) {}
+
 	@Get('google')
 	@UseGuards(GoogleOAuthGuard)
 	googleAuth() {
@@ -39,10 +55,36 @@ export class AuthController {
 		});
 	}
 
-	@Get('profile')
+	// @Get('profile')
+	// @UseGuards(SessionAuthGuard)
+	// getProfile(@Req() req: Request) {
+	// 	return req.user;
+	// }
+
+	// 🔓 Публичный профиль - доступен всем авторизованным пользователям
+	@Get('profile/:user_id/public')
 	@UseGuards(SessionAuthGuard)
-	getProfile(@Req() req: Request) {
-		return req.user;
+	async getPublicProfile(@Param('id') id: MongooSchema.Types.ObjectId) {
+		return this.userService.getPublicProfile(id);
+	}
+
+	@Get('profile/:user_id/private')
+	@UseGuards(SessionAuthGuard, RolesGuard)
+	@Roles(Role.USER, Role.ADMIN)
+	async getProfileById(
+		@Param('id') id: MongooSchema.Types.ObjectId,
+		@Req() req: Request,
+	) {
+		const currentUser = req.user as User;
+
+		// Проверяем, имеет ли пользователь доступ к этому профилю
+		if (currentUser._id !== id && !currentUser.roles.includes(Role.ADMIN)) {
+			throw new ForbiddenException(
+				'Нет прав для просмотра этого профиля',
+			);
+		}
+
+		return this.userService.getUserById(id);
 	}
 
 	// Diagnostic endpoint: returns req.user and session info (no guard)

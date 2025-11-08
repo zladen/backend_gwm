@@ -39,7 +39,7 @@ export class GoogleAuthStrategy extends PassportStrategy(
 			email: emails[0].value,
 			firstName: name.givenName,
 			lastName: name.familyName,
-			picture: photos[0].value,
+			image: photos[0].value,
 			accessToken,
 			refreshToken,
 		};
@@ -47,7 +47,10 @@ export class GoogleAuthStrategy extends PassportStrategy(
 		try {
 			// сохраняем или обновляем пользователя через AuthService
 			const user = await this.authService.validateUser(userData);
-			console.log('Google strategy - validated user in strategy:', user && (user as any).email);
+			console.log(
+				'Google strategy - validated user in strategy:',
+				user && (user as any).email,
+			);
 			// передаём найденного/созданного пользователя дальше в passport
 			done(null, user);
 		} catch (err) {

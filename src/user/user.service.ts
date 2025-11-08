@@ -20,6 +20,12 @@ export class UserService {
 		return this.userModel.findById(id);
 	}
 
+	getPublicProfile(id: MongooSchema.Types.ObjectId) {
+		return this.userModel
+			.findById(id)
+			.select('firstName lastName image description');
+	}
+
 	createUser(createUserInput: CreateUserInput) {
 		const createUser = new this.userModel(createUserInput);
 		return createUser.save();
