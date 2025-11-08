@@ -3,7 +3,7 @@ import { Document, Schema as MongooSchema } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Role } from 'src/auth/interfaces/role.interface';
 @ObjectType()
-@Schema()
+@Schema({ timestamps: true })
 export class User {
 	@Field(() => String)
 	_id: MongooSchema.Types.ObjectId;
@@ -18,15 +18,15 @@ export class User {
 
 	@Field(() => String)
 	@Prop({ type: String, unique: true })
-	email?: string;
+	email: string;
 
 	@Field(() => String, { nullable: true })
 	@Prop({ type: String })
-	image?: string;
+	image: string;
 
 	@Field(() => String, { nullable: true })
 	@Prop({ type: String })
-	description?: string;
+	description: string;
 
 	@Field(() => [String])
 	@Prop({ type: [String], enum: Object.values(Role), default: [Role.USER] })
