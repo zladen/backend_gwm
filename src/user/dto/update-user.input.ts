@@ -1,6 +1,4 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { CreateUserInput } from './create-user.input';
-import { PartialType } from '@nestjs/mapped-types';
 import { Schema as MongooSchema } from 'mongoose';
 import { Role } from 'src/auth/interfaces/role.interface';
 

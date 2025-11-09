@@ -4,7 +4,7 @@ import session from 'express-session';
 import passport from 'passport';
 import MongoStore from 'connect-mongo';
 import { AppModule } from './app.module';
-import { SessionSerializer } from './auth/GoogleAuth/serializer/google-session.serializer';
+import { SessionSerializer } from './auth/serializer/session.serializer';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);

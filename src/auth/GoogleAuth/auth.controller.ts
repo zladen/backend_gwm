@@ -38,7 +38,7 @@ export class AuthController {
 			(req as any).logIn(user, (err: any) => {
 				if (err) {
 					console.error('req.logIn error', err);
-					res.redirect('http://localhost:5173/auth/profile');
+					res.redirect('http://localhost:3001/auth/profile');
 					return resolve(null);
 				}
 				// сохраняем сессию перед редиректом
@@ -48,7 +48,7 @@ export class AuthController {
 						'session saved, session.passport =',
 						(req as any).session?.passport,
 					);
-					res.redirect('http://localhost:5173/auth/profile');
+					res.redirect('http://localhost:3001/auth/profile');
 					return resolve(null);
 				});
 			});
@@ -119,6 +119,6 @@ export class AuthController {
 	logout(@Req() req: Request, @Res() res: Response) {
 		req.logout(() => {});
 		req.session.destroy(() => {});
-		return res.redirect('http://localhost:5173');
+		return res.redirect('http://localhost:3001');
 	}
 }
