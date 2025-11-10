@@ -16,13 +16,6 @@ export class SessionSerializer {
 	async deserializeUser(id: string, done: Function) {
 		try {
 			const user = await this.userModel.findById(id);
-			// console.log(
-			// 	'SessionSerializer.deserializeUser - id=',
-			// 	id,
-			// 	'found=',
-			// 	!!user,
-			// 	user && user.email,
-			// );
 
 			const userSession = {
 				_id: user?._id,
@@ -31,6 +24,14 @@ export class SessionSerializer {
 				lastName: user?.lastName,
 				roles: user?.roles,
 			};
+
+			// console.log(
+			// 	'SessionSerializer.deserializeUser - id=',
+			// 	id,
+			// 	'found=',
+			// 	!!user,
+			// 	user && user.email,
+			// );
 
 			done(null, userSession);
 		} catch (err) {

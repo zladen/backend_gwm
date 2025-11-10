@@ -10,12 +10,14 @@ import { AuthResolver } from './auth.resolver';
 import { GoogleOAuthGuard } from './guard/google-oauth.guard';
 import { SessionAuthGuard } from '../guard/session-auth.guard';
 import { RolesGuard } from '../guard/roles.guard';
+import { SessionModule } from 'src/session/session.module';
 
 @Module({
 	imports: [
 		ConfigModule, // чтобы использовать ConfigService в стратеги
 		PassportModule.register({ session: true }), // регистрация passport
 		UserModule,
+		SessionModule,
 	],
 	providers: [
 		AuthService,

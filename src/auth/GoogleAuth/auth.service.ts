@@ -11,20 +11,21 @@ export class AuthService {
 	) {}
 
 	async validateUser(userdata: {
-		email: string;
 		firstName: string;
 		lastName: string;
 		image: string;
+		email: string;
+		roles?: Role[];
 	}): Promise<User> {
 		const user = await this.userModel.findOne({ email: userdata.email });
 
 		if (user) return user;
 
 		const newUser = new this.userModel({
-			email: userdata.email,
 			firstName: userdata.firstName,
 			lastName: userdata.lastName,
 			image: userdata.image || '',
+			email: userdata.email,
 			roles: [Role.USER],
 		});
 

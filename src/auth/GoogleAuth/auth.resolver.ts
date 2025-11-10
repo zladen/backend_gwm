@@ -5,26 +5,29 @@ import { User } from 'src/user/entities/user.entity';
 import { Roles } from '../decorators/roles.decorator';
 import { Role } from '../interfaces/role.interface';
 import { RolesGuard } from '../guard/roles.guard';
+import type { GqlContext } from 'src/auth/types/graphql-context';
 
 @Resolver(() => User)
 export class AuthResolver {
 	@Query(() => User)
 	@UseGuards(SessionAuthGuard)
-	async session(@Context() context: any) {
+	async session(
+		@Context() context: GqlContext,
+	): Promise<Partial<User> | null> {
 		// console.log(
 		// 	'AuthResolver.me - context keys:',
 		// 	Object.keys(context || {}),
 		// );
 		// console.log('AuthResolver.me - context.req =', !!context?.req);
 		// console.log('AuthResolver.me - context.req.user =', context?.req?.user);
-		return context.req.user;
+		return context.req.user ?? null;
 	}
 
 	// резолвер с требованием роли ADMIN
 	@Query(() => String)
 	@UseGuards(SessionAuthGuard, RolesGuard)
 	@Roles(Role.ADMIN)
-	async adminRoute(@Context() context: any) {
+	async adminRoute(@Context() context: GqlContext): Promise<string> {
 		return 'Доступ только для администраторов';
 	}
 
@@ -32,7 +35,7 @@ export class AuthResolver {
 	@Query(() => String)
 	@UseGuards(SessionAuthGuard, RolesGuard)
 	@Roles(Role.ADMIN, Role.MODERATOR)
-	async moderatorRoute(@Context() context: any) {
+	async moderatorRoute(@Context() context: GqlContext): Promise<string> {
 		return 'Доступ для администраторов и модераторов';
 	}
 }

@@ -6,6 +6,9 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { AuthService } from './../auth.service';
 import { ConfigService } from '@nestjs/config';
+import { GoogleProfile } from '../interfaces/profile.interface';
+import { Role } from 'src/auth/interfaces/role.interface';
+import { AuthUserPayload } from 'src/auth/dto/auth-user.payload';
 
 @Injectable()
 export class GoogleAuthStrategy extends PassportStrategy(
@@ -31,15 +34,15 @@ export class GoogleAuthStrategy extends PassportStrategy(
 	async validate(
 		accessToken: string,
 		refreshToken: string,
-		profile: any,
+		profile: GoogleProfile,
 		done: VerifyCallback,
-	): Promise<any> {
+	): Promise<void> {
 		const { name, emails, photos } = profile;
 		const userData = {
-			email: emails[0].value,
 			firstName: name.givenName,
 			lastName: name.familyName,
 			image: photos[0].value,
+			email: emails[0].value,
 			accessToken,
 			refreshToken,
 		};
@@ -47,18 +50,14 @@ export class GoogleAuthStrategy extends PassportStrategy(
 		try {
 			// сохраняем или обновляем пользователя через AuthService
 			const user = await this.authService.validateUser(userData);
-			const userSaved = {
-				_id: user?._id,
+			const userSaved: AuthUserPayload = {
+				_id: user?._id?.toString(),
 				email: user?.email,
 				firstName: user?.firstName,
 				lastName: user?.lastName,
 				roles: user?.roles,
 			};
 
-			// console.log(
-			// 	'Google strategy - validated user in strategy:',
-			// 	userSaved && (userSaved as any).email,
-			// );
 			// передаём найденного/созданного пользователя дальше в passport
 			done(null, userSaved);
 		} catch (err) {
