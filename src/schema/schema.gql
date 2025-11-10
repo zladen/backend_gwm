@@ -54,7 +54,7 @@ type Query {
   """Поиск места по id"""
   locationById(id: ID!): Location!
   moderatorRoute: String!
-  session: User!
+  session: User
 
   """Поиск пользователя по id"""
   userById(id: ID!): User!

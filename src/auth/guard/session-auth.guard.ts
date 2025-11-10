@@ -1,23 +1,17 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { AuthenticationError } from 'apollo-server-express';
 
 @Injectable()
 export class SessionAuthGuard implements CanActivate {
 	canActivate(context: ExecutionContext): boolean {
-		// Support both HTTP (REST) and GraphQL contexts
-		let req: any;
-		try {
-			const gql = GqlExecutionContext.create(context);
-			const gqlReq = gql.getContext().req;
-			if (gqlReq) {
-				req = gqlReq;
-			}
-		} catch (e) {
-			// not a GraphQL context
-		}
-
-		if (!req) {
-			req = context.switchToHttp().getRequest();
+		const ctx =
+			GqlExecutionContext.create(context).getContext?.() ??
+			context.switchToHttp().getRequest();
+		const req = ctx.req ?? context.switchToHttp().getRequest();
+		if (!req?.user) {
+			// Явно бросаем ошибку GraphQL/Apollo
+			throw new AuthenticationError('User is not authorized');
 		}
 
 		// Добавить логирование для отладки

@@ -6,21 +6,26 @@ import { Roles } from '../decorators/roles.decorator';
 import { Role } from '../interfaces/role.interface';
 import { RolesGuard } from '../guard/roles.guard';
 import type { GqlContext } from 'src/auth/types/graphql-context';
+import { AuthenticationError } from 'apollo-server-express';
 
 @Resolver(() => User)
 export class AuthResolver {
-	@Query(() => User)
+	@Query(() => User, { nullable: true })
 	@UseGuards(SessionAuthGuard)
 	async session(
 		@Context() context: GqlContext,
 	): Promise<Partial<User> | null> {
+		if (!context.req.user) {
+			// бросаем стандартную Apollo ошибку с кодом UNAUTHENTICATED
+			throw new AuthenticationError('Пользователь не авторизован');
+		}
 		// console.log(
 		// 	'AuthResolver.me - context keys:',
 		// 	Object.keys(context || {}),
 		// );
 		// console.log('AuthResolver.me - context.req =', !!context?.req);
 		// console.log('AuthResolver.me - context.req.user =', context?.req?.user);
-		return context.req.user ?? null;
+		return context.req.user;
 	}
 
 	// резолвер с требованием роли ADMIN
