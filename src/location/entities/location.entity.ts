@@ -4,16 +4,18 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @ObjectType()
 @Schema()
+@ObjectType()
+@Schema()
 export class Location {
 	@Field(() => String)
 	_id: MongooSchema.Types.ObjectId;
 
 	@Field(() => String)
-	@Prop({ required: true })
+	@Prop({ type: String, enum: ['Point'], required: true })
 	type: string;
 
 	@Field(() => [Float])
-	@Prop({ required: true })
+	@Prop({ type: [Number], required: true })
 	coordinates: [number, number];
 }
 

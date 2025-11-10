@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ID } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ID } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -23,8 +23,8 @@ export class UserResolver {
 		name: 'users',
 		description: 'Получить всех пользователей',
 	})
-	findAll() {
-		return this.userService.findAll();
+	getAllUsers() {
+		return this.userService.getAllUsers();
 	}
 
 	@Mutation(() => User, {

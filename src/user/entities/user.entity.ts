@@ -1,52 +1,44 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Document, Schema as MongooSchema } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Location } from 'src/location/entities/location.entity';
-
+import { Role } from 'src/auth/interfaces/role.interface';
 @ObjectType()
-@Schema()
+@Schema({ timestamps: true })
 export class User {
 	@Field(() => String)
 	_id: MongooSchema.Types.ObjectId;
 
-	// Add user properties
 	@Field(() => String)
-	@Prop()
-	name: string;
+	@Prop({ type: String })
+	firstName: string;
 
 	@Field(() => String)
-	@Prop({ unique: true })
+	@Prop({ type: String })
+	lastName: string;
+
+	@Field(() => String)
+	@Prop({ type: String, unique: true })
 	email: string;
 
-	@Field(() => String)
-	@Prop()
+	@Field(() => String, { nullable: true })
+	@Prop({ type: String })
 	image: string;
 
-	@Field(() => String)
-	@Prop()
+	@Field(() => String, { nullable: true })
+	@Prop({ type: String })
 	description: string;
 
-	@Field(() => Location)
-	@Prop()
-	location: Location;
+	@Field(() => [String])
+	@Prop({ type: [String], enum: Object.values(Role), default: [Role.USER] })
+	roles: Role[];
 
-	// @Field(() => String)
-	// @Prop()
-	// categories: Categories;
+	@Field(() => Date)
+	@Prop({ type: Date, default: Date.now })
+	createdAt: Date;
 
-	// @Field(() => String)
-	// @Prop()
-	// tags: Tags;
-
-	emailVerified: Boolean;
-
-	// @Field(() => String)
-	// @Prop()
-	// password: string;
-
-	// @Field(() => String)
-	// @Prop()
-	// address: string;
+	@Field(() => Date)
+	@Prop({ type: Date, default: Date.now })
+	updatedAt: Date;
 }
 
 export type UserDocument = User & Document;
