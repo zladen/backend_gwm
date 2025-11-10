@@ -10,7 +10,7 @@ import { RolesGuard } from '../guard/roles.guard';
 export class AuthResolver {
 	@Query(() => User)
 	@UseGuards(SessionAuthGuard)
-	async me(@Context() context: any) {
+	async session(@Context() context: any) {
 		// console.log(
 		// 	'AuthResolver.me - context keys:',
 		// 	Object.keys(context || {}),
